@@ -16,7 +16,7 @@ public class Shuffler {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Results of " + SHUFFLE_COUNT +
-								 " consecutive perfect shuffles:");
+				" consecutive perfect shuffles:");
 		int[] values1 = {0, 1, 2, 3};
 		for (int j = 1; j <= SHUFFLE_COUNT; j++) {
 			perfectShuffle(values1);
@@ -29,7 +29,7 @@ public class Shuffler {
 		System.out.println();
 
 		System.out.println("Results of " + SHUFFLE_COUNT +
-								 " consecutive efficient selection shuffles:");
+				" consecutive efficient selection shuffles:");
 		int[] values2 = {0, 1, 2, 3};
 		for (int j = 1; j <= SHUFFLE_COUNT; j++) {
 			selectionShuffle(values2);
@@ -40,6 +40,8 @@ public class Shuffler {
 			System.out.println();
 		}
 		System.out.println();
+		System.out.println("------------------------------------------------------");
+		System.out.println(arePermutations(values1, values2));
 	}
 
 
@@ -51,6 +53,27 @@ public class Shuffler {
 	 */
 	public static void perfectShuffle(int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
+		int[] temp = new int[values.length];
+		int mid = (values.length + 1) / 2;
+
+		// Interleave elements 0 ... mid-1 with elements mid ... length-1
+		int unshuffledPos = 0;
+		int k = 0;
+		for ( ; k < mid; k++) {
+			temp[unshuffledPos] = values[k];
+			unshuffledPos += 2;
+		}
+		unshuffledPos = 1;
+		for ( ; k < values.length; k++) {
+			temp[unshuffledPos] = values[k];
+			unshuffledPos += 2;
+		}
+
+		// Copy elements back to values
+		for (k = 0; k < values.length; k++) {
+			values[k] = temp[k];
+		}
+
 	}
 
 	/**
@@ -66,5 +89,38 @@ public class Shuffler {
 	 */
 	public static void selectionShuffle(int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
+		for (int k = values.length - 1; k > 0; k--) {
+			int pos = (int) (Math.random() * (k + 1));
+			int temp = values[pos];
+			values[pos] = values[k];
+			values[k] = temp;
+		}
+	}
+
+	public static String flip() {
+		int b = (int) (Math.random() * (3) + 1);
+		String outcome = "";
+		if(b < 3) {
+			outcome = "heads";
+		}
+		if(b == 3) {
+			outcome = "tails";
+		}
+		return outcome;
+	}
+
+	public static boolean arePermutations(int[] a, int[] b){
+		for(int i = 0; i < a.length; i++){
+			boolean test = false;
+			for(int k = 0; k < b.length; k++){
+				if(a[i] == b[k]){
+					test = true;
+				}
+			}
+			if(test){
+				return true;
+			}
+		}
+		return false;
 	}
 }
