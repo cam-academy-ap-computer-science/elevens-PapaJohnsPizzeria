@@ -1,6 +1,7 @@
 /**
  * This class provides a convenient way to test shuffling methods.
  */
+import java.util.*;
 public class Shuffler {
 
 	/**
@@ -109,18 +110,17 @@ public class Shuffler {
 		return outcome;
 	}
 
-	public static boolean arePermutations(int[] a, int[] b){
-		for(int i = 0; i < a.length; i++){
-			boolean test = false;
-			for(int k = 0; k < b.length; k++){
-				if(a[i] == b[k]){
-					test = true;
-				}
-			}
-			if(test){
-				return true;
-			}
-		}
-		return false;
-	}
+	public static boolean arePermutations(int[] arr1, int[] arr2) {
+        boolean outcome = true;
+        Arrays.parallelSort(arr1);
+        Arrays.parallelSort(arr2);
+        for(int i = 0; i < arr1.length; i++) {
+            if (arr1[i] == arr2[i]) {
+                outcome = true;
+            } else {
+                outcome = false;
+            }
+        }
+        return outcome;
+    }
 }
